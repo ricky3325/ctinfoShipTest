@@ -41,14 +41,6 @@ go test -v
 | Status  | 200: Success       |
 | Content-Type   | Application/Json     |
 
-**Response body**
-The response body is a JSON object type.
-
-| Name | Type | Description |
-| --------- |------ |------------ |
-| id      |	string    |短網址的ID    |
-| shortUrl  |	string |完整短網址|
-
 ----
 
 ##### GET http://localhost/login3
