@@ -39,7 +39,7 @@ go test -v
 | Response header | Value |
 | ------------- | ------------------------------ |
 | Status  | 200: Success       |
-| Content-Type   | 忘了，晚點看     |
+| Content-Type   | Application/Json     |
 
 **Response body**
 The response body is a JSON object type.
