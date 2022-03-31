@@ -26,7 +26,7 @@ go test -v
 | Request methods/headers | Value |
 | ------------- | ------------------------------ |
 | Method      | POST       |
-| Content-Type   | Text/Plain     |
+| Content-Type   | application/text     |
 
 **Request parameters**
 
@@ -39,7 +39,7 @@ go test -v
 | Response header | Value |
 | ------------- | ------------------------------ |
 | Status  | 200: Success       |
-| Content-Type   | Application/Json     |
+| Content-Type   | application/json     |
 
 ----
 
@@ -57,7 +57,7 @@ go test -v
 | Response header | Value |
 | ------------- | ------------------------------ |
 | Status  | 200: Success<br>401: Fail|
-| Content-Type   | Text/Plain     |
+| Content-Type   | application/text     |
 
 **Response body**
 
