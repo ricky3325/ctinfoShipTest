@@ -1,0 +1,57 @@
+version: "3"
+services:
+
+  nginx:
+    container_name: nginx
+    build: nginx/
+    ports:
+      - "80:80"
+    restart: on-failure
+    networks:
+      internal_routes:
+
+  myproject:
+    container_name: myproject
+    build: myproject/
+    restart: always
+    networks:
+      internal_routes:
+        aliases:
+          - myproject
+
+  httpapitest:
+    container_name: httpapitest
+    build: httpapitest/
+    restart: always
+    networks:
+      internal_routes:
+        aliases:
+          - httpapitest
+
+  mysql8: 
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    volumes:
+      - ~/mysql-docker-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: mydb
+    networks:
+      internal_routes:
+        aliases:
+          - mysql
+
+  redis:
+    restart: always
+    container_name: redis
+    image: redis:alpine
+    volumes:
+      - /data/redis-data:/data
+    networks:
+      internal_routes:
+        aliases:
+          - redis
+
+networks:
+  internal_routes:
