@@ -234,24 +234,32 @@ func login2(writer http.ResponseWriter,  request *http.Request)  {
 func login3(writer http.ResponseWriter,  request *http.Request)  {
     request.ParseForm()
     id, uError :=  request.Form["id"]
+    info, iError :=  request.Form["info"]
+    numberId, err := strconv.ParseUint(id[0], 10, 64)
     if request.Method == "POST"{
         var result  Resp
-        if !uError {
+        if !uError || !iError || err != nil {
             result.Code = "401"
             result.Msg = "失敗"
         } else {
             result.Code = "200"
-            result.Msg = "Good" + id[0]
-            addDataToRedis(strconv.FormatUint(1, 10), id[0])
+            result.Msg = "Good>> ID: " + id[0] + "INFO: " + info[0]
+            addDataToRedis(strconv.FormatUint(numberId, 10), info[0])
         }
         if err := json.NewEncoder(writer).Encode(result); err != nil {
             log.Fatal(err)
         }
     } else if request.Method == "GET"{
-        writer.WriteHeader(http.StatusOK)
-        writer.Header().Set("Content-Type", "application/text")
-        writer.Write([]byte(getDataToRedis(strconv.FormatUint(1, 10))))
-        return 
+        var result  Resp
+        if !uError || !iError || err != nil {
+            result.Code = "401"
+            result.Msg = "失敗"
+        } else {
+            writer.WriteHeader(http.StatusOK)
+            writer.Header().Set("Content-Type", "application/text")
+            writer.Write([]byte(getDataToRedis(strconv.FormatUint(numberId, 10))))
+            return 
+        }
     }
 }
 
@@ -305,23 +313,6 @@ func getDataToRedis(id string) (string) {
     return val
 }
 
-/*func CreateTable() {
-	sql := `CREATE TABLE cumstomer(
-	id bigint(20) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-	username VARCHAR(64),
-	password VARCHAR(64),
-	status INT(4),
-	created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-	); `
-
-	if _, err := MyDB.Exec(sql); err != nil {
-		fmt.Println("create table failed:", err)
-		return
-	}
-	fmt.Println("create table successd")
-}*/
-
 func CreateTable() {
 	sql := `CREATE TABLE urshoner(
 	id bigint(20) PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -336,30 +327,6 @@ func CreateTable() {
 	fmt.Println("create table successd")
 }
 
-/*func AddCumstomer() {
-	//sql := `insert INTO cumstomer(username,password) values('test','123456'); `
-    result, err := MyDB.Exec("insert INTO cumstomer(username,password) values(?,?)", "test", "123456")
-    //result, err := MyDB.Exec(sql)
-	if err != nil {
-		fmt.Printf("Insert data failed,err:%v", err)
-		return
-	}
-    //sql.Result 的LastInsertId()可取得AUTO_INCREMENT的值
-	lastInsertID, err := result.LastInsertId()
-	if err != nil {
-		fmt.Printf("Get insert id failed,err:%v", err)
-		return
-	}
-	fmt.Println("Insert data id:", lastInsertID)
-
-    //RowsAffected() 影響的資料筆數，如果很嚴謹的寫法會判斷RowsAffected()是否與新增的資料筆數一致
-	rowsaffected, err := result.RowsAffected() 
-	if err != nil {
-		fmt.Printf("Get RowsAffected failed,err:%v", err)
-		return
-	}
-	fmt.Println("Affected rows:", rowsaffected)
-}*/
 
 func ReadFullData(Num string) {
     var fullData FullData
