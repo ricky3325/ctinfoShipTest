@@ -32,7 +32,8 @@ go test -v
 
 | Parameter name | Required/optional | Type | Description |
 | --------- | ------------ |------ |------------ |
-| id      | Required    |	string    |要輸入的網址    |
+| id      | Required    |	string    |要輸入的INDEX    |
+| info      | Required    |	string    |要輸入的INFO   |
 
 **Response**
 
@@ -51,6 +52,12 @@ go test -v
 | ------------- | ------------------------------ |
 | Method      | GET       |
 
+**Request parameters**
+
+| Parameter name | Required/optional | Type | Description |
+| --------- | ------------ |------ |------------ |
+| id      | Required    |	string    |要查詢的INDEX    |
+| info      | Required    |	string    |輸入值:0000   |
 
 **Response**
 
